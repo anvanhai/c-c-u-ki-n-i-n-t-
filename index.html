@@ -6,10 +6,13 @@
     <title>Ôn Tập Trắc Nghiệm Linh Kiện Điện Tử</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .correct-answer { background-color: #d1fae5; border-color: #10b981; }
-        .wrong-answer { background-color: #fee2e2; border-color: #ef4444; }
-        .missed-answer { background-color: #fef3c7; border-color: #f59e0b; }
+        .correct-answer { background-color: #d1fae5; border-color: #10b981; transition: all 0.3s ease; }
+        .wrong-answer { background-color: #fee2e2; border-color: #ef4444; transition: all 0.3s ease; }
+        .missed-answer { background-color: #fef3c7; border-color: #f59e0b; transition: all 0.3s ease; }
         input[type="radio"]:disabled { cursor: not-allowed; }
+        .label-option:hover:not(.correct-answer):not(.wrong-answer):not(.missed-answer) {
+            background-color: #f9fafb;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans p-4 md:p-8">
@@ -17,7 +20,7 @@
         <div class="bg-white rounded-xl shadow-lg p-6 md:p-10 mb-8 border-t-4 border-blue-500">
             <h1 class="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-4">Ôn Tập Linh Kiện Điện Tử</h1>
             <p class="text-center text-gray-600 mb-2">Diode – BJT – FET – Op-amp</p>
-            <p class="text-center text-sm text-gray-500 mb-6 bg-gray-100 py-2 rounded-lg">Đề thi gồm 60 câu hỏi được chọn ngẫu nhiên từ ngân hàng câu. Chúc bạn làm bài tốt!</p>
+            <p class="text-center text-sm text-gray-500 mb-6 bg-gray-100 py-2 rounded-lg">Đề thi gồm 60 câu hỏi ngẫu nhiên. Click vào đáp án để biết đúng/sai ngay lập tức!</p>
             
             <div id="quiz-container" class="space-y-8">
                 <!-- Câu hỏi sẽ được render ở đây bằng JS -->
@@ -25,7 +28,7 @@
             
             <div class="text-center mt-10">
                 <button id="submit-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-10 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
-                    Nộp Bài
+                    Nộp Bài (Xem Tổng Điểm)
                 </button>
             </div>
         </div>
@@ -129,6 +132,7 @@
 
         let selectedQuestions = [];
         const TOTAL_QUESTIONS = 60;
+        let currentScore = 0;
 
         function shuffleArray(array) {
             let currentIndex = array.length, randomIndex;
@@ -141,12 +145,12 @@
         }
 
         function initQuiz() {
-            // Trộn ngân hàng câu hỏi và lấy 60 câu
+            currentScore = 0;
             const shuffledBank = shuffleArray([...questionBank]);
             selectedQuestions = shuffledBank.slice(0, TOTAL_QUESTIONS);
             
             const container = document.getElementById('quiz-container');
-            container.innerHTML = ''; // Clear old
+            container.innerHTML = ''; 
 
             selectedQuestions.forEach((q, index) => {
                 const questionDiv = document.createElement('div');
@@ -157,8 +161,8 @@
                 
                 for (const [key, value] of Object.entries(q.opts)) {
                     html += `
-                        <label class="flex items-center space-x-3 cursor-pointer p-3 rounded-md border border-gray-200 hover:bg-gray-50 transition-colors" id="label-${index}-${key}">
-                            <input type="radio" name="q${index}" value="${key}" class="form-radio h-5 w-5 text-blue-600">
+                        <label class="flex items-center space-x-3 cursor-pointer p-3 rounded-md border border-gray-200 label-option" id="label-${index}-${key}">
+                            <input type="radio" name="q${index}" value="${key}" class="form-radio h-5 w-5 text-blue-600" onchange="checkAnswer(${index}, '${key}', '${q.ans}')">
                             <span class="text-gray-700">${key.toUpperCase()}. ${value}</span>
                         </label>
                     `;
@@ -169,27 +173,38 @@
             });
         }
 
+        // Hàm này được gọi ngay khi người dùng click vào một đáp án
+        function checkAnswer(qIndex, selectedKey, correctKey) {
+            // Khóa tất cả các nút radio của câu hỏi này (không cho đổi đáp án)
+            const inputs = document.querySelectorAll(`input[name="q${qIndex}"]`);
+            inputs.forEach(input => input.disabled = true);
+
+            const selectedLabel = document.getElementById(`label-${qIndex}-${selectedKey}`);
+            const correctLabel = document.getElementById(`label-${qIndex}-${correctKey}`);
+
+            if (selectedKey === correctKey) {
+                // Trả lời đúng -> Bôi xanh đáp án chọn, cộng điểm
+                selectedLabel.classList.add('correct-answer');
+                currentScore++;
+            } else {
+                // Trả lời sai -> Bôi đỏ đáp án chọn, bôi xanh đáp án đúng
+                selectedLabel.classList.add('wrong-answer');
+                correctLabel.classList.add('correct-answer');
+            }
+        }
+
         function submitQuiz() {
-            let score = 0;
             const container = document.getElementById('quiz-container');
 
+            // Quét xem câu nào chưa được trả lời (input chưa bị disabled)
             selectedQuestions.forEach((q, index) => {
-                const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+                const inputs = document.querySelectorAll(`input[name="q${index}"]`);
+                const isAnswered = Array.from(inputs).some(input => input.disabled);
                 
-                // Vô hiệu hóa tất cả input sau khi nộp
-                document.querySelectorAll(`input[name="q${index}"]`).forEach(input => input.disabled = true);
-
-                const correctLabel = document.getElementById(`label-${index}-${q.ans}`);
-                correctLabel.classList.add('correct-answer');
-
-                if (selectedOption) {
-                    if (selectedOption.value === q.ans) {
-                        score++;
-                    } else {
-                        const wrongLabel = document.getElementById(`label-${index}-${selectedOption.value}`);
-                        wrongLabel.classList.add('wrong-answer');
-                    }
-                } else {
+                if (!isAnswered) {
+                    // Nếu chưa trả lời -> Khóa lại, bôi vàng nền câu hỏi, chỉ ra đáp án đúng
+                    inputs.forEach(input => input.disabled = true);
+                    const correctLabel = document.getElementById(`label-${index}-${q.ans}`);
                     const block = document.getElementById(`q-block-${index}`);
                     block.classList.add('border-yellow-400');
                     correctLabel.classList.add('missed-answer');
@@ -201,10 +216,10 @@
             const scoreDisplay = document.getElementById('score-display');
             const scoreText = document.getElementById('score-text');
             
-            scoreDisplay.textContent = `${score}/${TOTAL_QUESTIONS}`;
+            scoreDisplay.textContent = `${currentScore}/${TOTAL_QUESTIONS}`;
             
             let feedback = '';
-            const ratio = score / TOTAL_QUESTIONS;
+            const ratio = currentScore / TOTAL_QUESTIONS;
             if(ratio >= 0.8) feedback = 'Tuyệt vời! Bạn nắm kiến thức rất vững.';
             else if(ratio >= 0.5) feedback = 'Khá tốt! Hãy ôn lại thêm một chút nữa nhé.';
             else feedback = 'Cố gắng lên! Bạn cần ôn tập kỹ lại lý thuyết.';
