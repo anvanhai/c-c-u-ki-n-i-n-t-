@@ -6,13 +6,13 @@
     <title>Ôn Tập Trắc Nghiệm Linh Kiện Điện Tử</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .correct-answer { background-color: #d1fae5; border-color: #10b981; transition: all 0.3s ease; }
-        .wrong-answer { background-color: #fee2e2; border-color: #ef4444; transition: all 0.3s ease; }
-        .missed-answer { background-color: #fef3c7; border-color: #f59e0b; transition: all 0.3s ease; }
+        .correct-answer { background-color: #d1fae5 !important; border-color: #10b981 !important; transition: all 0.3s ease; }
+        .wrong-answer { background-color: #fee2e2 !important; border-color: #ef4444 !important; transition: all 0.3s ease; }
+        .missed-answer { background-color: #fef3c7 !important; border-color: #f59e0b !important; transition: all 0.3s ease; }
         input[type="radio"]:disabled { cursor: not-allowed; }
-        .label-option:hover:not(.correct-answer):not(.wrong-answer):not(.missed-answer) {
-            background-color: #f9fafb;
-        }
+        .label-option:hover { background-color: #f9fafb; }
+        /* Tùy chỉnh hiển thị công thức cơ bản */
+        .math { font-family: "Courier New", Courier, monospace; font-weight: bold; color: #1e40af; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans p-4 md:p-8">
@@ -20,7 +20,7 @@
         <div class="bg-white rounded-xl shadow-lg p-6 md:p-10 mb-8 border-t-4 border-blue-500">
             <h1 class="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-4">Ôn Tập Linh Kiện Điện Tử</h1>
             <p class="text-center text-gray-600 mb-2">Diode – BJT – FET – Op-amp</p>
-            <p class="text-center text-sm text-gray-500 mb-6 bg-gray-100 py-2 rounded-lg">Đề thi gồm 60 câu hỏi ngẫu nhiên. Click vào đáp án để biết đúng/sai ngay lập tức!</p>
+            <p class="text-center text-sm text-gray-500 mb-6 bg-gray-100 py-2 rounded-lg">Đề thi gồm 60 câu hỏi ngẫu nhiên. Click vào đáp án để biết đúng/sai và <b>xem ngay giải thích/công thức!</b></p>
             
             <div id="quiz-container" class="space-y-8">
                 <!-- Câu hỏi sẽ được render ở đây bằng JS -->
@@ -49,85 +49,85 @@
     <script>
         const questionBank = [
             // DIODE
-            { q: "Thuật ngữ phân cực (bias) có nghĩa là:", opts: { a: "tỉ số giữa hạt dẫn đa số và hạt dẫn thiểu số", b: "lượng dòng điện chạy qua diode", c: "một điện áp một chiều được đặt vào để điều khiển hoạt động của linh kiện", d: "không phải (a), (b) hay (c)" }, ans: "c" },
-            { q: "Để phân cực thuận cho diode:", opts: { a: "đặt điện áp ngoài dương ở anode và âm ở catot", b: "đặt điện áp ngoài âm ở anode và dương ở catot", c: "đặt điện áp ngoài dương ở vùng p và âm ở vùng n", d: "cả (a) và (c)" }, ans: "d" },
-            { q: "Khi diode phân cực thuận:", opts: { a: "dòng điện chỉ là dòng lỗ trống", b: "dòng điện chỉ là dòng electron", c: "dòng điện chỉ do hạt dẫn đa số tạo ra", d: "dòng điện do cả lỗ trống và electron tạo ra" }, ans: "d" },
-            { q: "Mặc dù dòng bị chặn khi phân cực ngược:", opts: { a: "vẫn có dòng do hạt dẫn đa số", b: "có một dòng rất nhỏ do hạt dẫn thiểu số", c: "có dòng thác lũ" }, ans: "b" },
-            { q: "Với diode silicon, giá trị điện áp phân cực thuận thường:", opts: { a: "phải lớn hơn 0,3 V", b: "phải lớn hơn 0,7 V", c: "phụ thuộc bề rộng vùng nghèo", d: "phụ thuộc nồng độ hạt dẫn đa số" }, ans: "b" },
-            { q: "Khi phân cực thuận, diode:", opts: { a: "chặn dòng", b: "dẫn dòng", c: "có điện trở lớn", d: "sụt áp lớn" }, ans: "b" },
-            { q: "Diode thường được sử dụng ở:", opts: { a: "vùng đánh thủng ngược", b: "vùng phân cực thuận", c: "vùng phân cực ngược", d: "(b) hoặc (c)" }, ans: "d" },
-            { q: "Điện trở động có thể quan trọng khi diode:", opts: { a: "phân cực ngược", b: "phân cực thuận", c: "ở trong vùng đánh thủng ngược", d: "không phân cực" }, ans: "b" },
-            { q: "Đường đặc tuyến V-I của diode cho biết:", opts: { a: "điện áp trên diode ứng với một dòng nhất định", b: "lượng dòng điện ứng với một điện áp phân cực nhất định", c: "công suất tiêu tán", d: "không cái nào ở trên" }, ans: "b" },
-            { q: "Về lý tưởng, diode có thể được biểu diễn bằng:", opts: { a: "nguồn điện áp", b: "điện trở", c: "công tắc", d: "tất cả các loại trên" }, ans: "c" },
-            { q: "Trong mô hình diode thực tế:", opts: { a: "có tính đến thế hàng rào", b: "có tính đến điện trở động thuận", c: "không có yếu tố nào ở trên", d: "có tính cả (a) và (b)" }, ans: "a" },
-            { q: "Trong mô hình diode đầy đủ:", opts: { a: "có tính đến thế hàng rào", b: "có tính đến điện trở động thuận", c: "có tính đến điện trở ngược", d: "tất cả các yếu tố trên" }, ans: "d" },
-            { q: "Giá trị trung bình của điện áp chỉnh lưu nửa chu kỳ có đỉnh 200 V là:", opts: { a: "63,7 V", b: "127,2 V", c: "141 V", d: "0 V" }, ans: "a" },
-            { q: "Khi đưa điện áp hình sin 60 Hz vào chỉnh lưu nửa chu kỳ, tần số ngõ ra là:", opts: { a: "120 Hz", b: "30 Hz", c: "60 Hz", d: "0 Hz" }, ans: "c" },
-            { q: "Đỉnh điện áp vào chỉnh lưu nửa chu kỳ là 10 V. Đỉnh gần đúng của điện áp ra là:", opts: { a: "10 V", b: "3,18 V", c: "10,7 V", d: "9,3 V" }, ans: "d" },
-            { q: "Với mạch chỉnh lưu nửa chu kỳ có điện áp đỉnh ngõ vào 10 V, diode phải chịu được điện áp ngược là:", opts: { a: "10 V", b: "5 V", c: "20 V", d: "3,18 V" }, ans: "a" },
-            { q: "Giá trị trung bình của điện áp chỉnh lưu toàn chu kỳ có đỉnh 75 V là:", opts: { a: "53 V", b: "47,8 V", c: "37,5 V", d: "23,9 V" }, ans: "b" },
-            { q: "Khi đưa điện áp hình sin 60 Hz vào chỉnh lưu toàn chu kỳ, tần số ngõ ra là:", opts: { a: "120 Hz", b: "60 Hz", c: "240 Hz", d: "0 Hz" }, ans: "a" },
-            { q: "Tổng điện áp thứ cấp của mạch chỉnh lưu toàn chu kỳ có điểm giữa là 125 V rms. Bỏ qua sụt áp diode, điện áp ra rms là:", opts: { a: "125 V", b: "177 V", c: "100 V", d: "62,5 V" }, ans: "d" },
-            { q: "Khi điện áp ra đỉnh là 100 V, PIV của mỗi diode trong mạch chỉnh lưu toàn chu kỳ có điểm giữa là (bỏ qua sụt áp diode):", opts: { a: "100 V", b: "200 V", c: "141 V", d: "50 V" }, ans: "b" },
-            { q: "Khi điện áp ra rms của chỉnh lưu cầu là 20 V, điện áp ngược đỉnh trên các diode là (bỏ qua sụt áp diode):", opts: { a: "20 V", b: "40 V", c: "28,3 V", d: "56,6 V" }, ans: "c" },
-            { q: "Một điện áp hình sin 10 V đỉnh–đỉnh được đặt lên mạch gồm diode silicon nối tiếp điện trở. Điện áp lớn nhất trên diode là:", opts: { a: "9,3 V", b: "5 V", c: "0,7 V", d: "10 V", e: "4,3 V" }, ans: "b" },
-            { q: "Trong một mạch xén phân cực, điện áp phân cực là 5 V, ngõ vào là sóng sin đỉnh 10 V. Nếu cực dương của nguồn phân cực nối với catot của diode, điện áp lớn nhất ở anode là:", opts: { a: "10 V", b: "5 V", c: "5,7 V", d: "0,7 V" }, ans: "c" },
-            { q: "Trong một mạch ghim dương, ngõ vào là sóng sin 120 V rms. Giá trị một chiều của ngõ ra là:", opts: { a: "119,3 V", b: "169 V", c: "60 V", d: "75,6 V" }, ans: "b" },
-            { q: "Ngõ vào của mạch nhân đôi điện áp là 120 V rms. Điện áp ngõ ra xấp xỉ:", opts: { a: "240 V", b: "60 V", c: "167 V", d: "339 V" }, ans: "d" },
-            { q: "Nếu điện áp vào mạch nhân ba có giá trị rms là 12 V thì điện áp một chiều ra xấp xỉ:", opts: { a: "36 V", b: "50,9 V", c: "33,9 V", d: "32,4 V" }, ans: "b" },
-            { q: "Khi diode silicon hoạt động tốt ở chế độ phân cực thuận, đồng hồ DMM ở thang thử diode sẽ chỉ:", opts: { a: "0 V", b: "OL", c: "xấp xỉ 0,7 V", d: "xấp xỉ 0,3 V" }, ans: "c" },
-            { q: "Khi diode silicon bị hở, DMM thường chỉ:", opts: { a: "0 V", b: "OL", c: "xấp xỉ 0,7 V", d: "xấp xỉ 0,3 V" }, ans: "b" },
-            { q: "Trong mạch chỉnh lưu, nếu cuộn thứ cấp của biến áp bị hở thì ngõ ra:", opts: { a: "0 V", b: "120 V", c: "nhỏ hơn bình thường", d: "không bị ảnh hưởng" }, ans: "a" },
-            { q: "Nếu một trong các diode của mạch chỉnh lưu cầu toàn chu kỳ bị hở, ngõ ra là:", opts: { a: "0 V", b: "bằng một phần tư biên độ điện áp vào", c: "điện áp chỉnh lưu nửa chu kỳ", d: "điện áp 120 Hz" }, ans: "c" },
-            { q: "Khi kiểm tra mạch chỉnh lưu cầu toàn chu kỳ 60 Hz mà thấy ngõ ra có gợn sóng 60 Hz thì:", opts: { a: "mạch đang hoạt động bình thường", b: "có một diode bị hở", c: "cuộn thứ cấp biến áp bị chập", d: "tụ lọc bị rò" }, ans: "b" },
+            { q: "Thuật ngữ phân cực (bias) có nghĩa là:", opts: { a: "tỉ số giữa hạt dẫn đa số và hạt dẫn thiểu số", b: "lượng dòng điện chạy qua diode", c: "một điện áp một chiều được đặt vào để điều khiển hoạt động của linh kiện", d: "không phải (a), (b) hay (c)" }, ans: "c", expl: "Phân cực là đặt điện áp DC để thiết lập chế độ làm việc cho linh kiện." },
+            { q: "Để phân cực thuận cho diode:", opts: { a: "đặt điện áp ngoài dương ở anode và âm ở catot", b: "đặt điện áp ngoài âm ở anode và dương ở catot", c: "đặt điện áp ngoài dương ở vùng p và âm ở vùng n", d: "cả (a) và (c)" }, ans: "d", expl: "Anode nối với vùng p, catot nối với vùng n nên đáp án (a) và (c) là cùng một cách mắc." },
+            { q: "Khi diode phân cực thuận:", opts: { a: "dòng điện chỉ là dòng lỗ trống", b: "dòng điện chỉ là dòng electron", c: "dòng điện chỉ do hạt dẫn đa số tạo ra", d: "dòng điện do cả lỗ trống và electron tạo ra" }, ans: "d", expl: "Lỗ trống chuyển động trong vùng p, electron chuyển động trong vùng n; cả hai loại hạt dẫn này cùng tạo nên dòng thuận." },
+            { q: "Mặc dù dòng bị chặn khi phân cực ngược:", opts: { a: "vẫn có dòng do hạt dẫn đa số", b: "có một dòng rất nhỏ do hạt dẫn thiểu số", c: "có dòng thác lũ" }, ans: "b", expl: "Dòng ngược bão hòa rất nhỏ là do hạt dẫn thiểu số (dòng thác lũ chỉ xuất hiện khi bị đánh thủng)." },
+            { q: "Với diode silicon, giá trị điện áp phân cực thuận thường:", opts: { a: "phải lớn hơn 0,3 V", b: "phải lớn hơn 0,7 V", c: "phụ thuộc bề rộng vùng nghèo", d: "phụ thuộc nồng độ hạt dẫn đa số" }, ans: "b", expl: "Si cần vượt thế hàng rào <span class='math'>&approx; 0,7 V</span> để dẫn mạnh (0,3 V là của germanium)." },
+            { q: "Khi phân cực thuận, diode:", opts: { a: "chặn dòng", b: "dẫn dòng", c: "có điện trở lớn", d: "sụt áp lớn" }, ans: "b", expl: "Vùng nghèo hẹp lại nên diode dẫn dòng, điện trở nhỏ và chỉ sụt áp khoảng 0,7 V." },
+            { q: "Diode thường được sử dụng ở:", opts: { a: "vùng đánh thủng ngược", b: "vùng phân cực thuận", c: "vùng phân cực ngược", d: "(b) hoặc (c)" }, ans: "d", expl: "Diode chỉnh lưu làm việc ở vùng thuận (dẫn) và vùng ngược (khóa), không dùng ở vùng đánh thủng." },
+            { q: "Điện trở động có thể quan trọng khi diode:", opts: { a: "phân cực ngược", b: "phân cực thuận", c: "ở trong vùng đánh thủng ngược", d: "không phân cực" }, ans: "b", expl: "Công thức điện trở động: <span class='math'>r'<sub>d</sub> = &Delta;V<sub>F</sub> / &Delta;I<sub>F</sub></span>. Đây là điện trở của diode dẫn thuận, làm V<sub>F</sub> tăng nhẹ khi dòng tăng." },
+            { q: "Đường đặc tuyến V-I của diode cho biết:", opts: { a: "điện áp trên diode ứng với một dòng nhất định", b: "lượng dòng điện ứng với một điện áp phân cực nhất định", c: "công suất tiêu tán", d: "không cái nào ở trên" }, ans: "b", expl: "Đường cong V-I thể hiện dòng điện qua diode như một hàm số của điện áp đặt trên diode." },
+            { q: "Về lý tưởng, diode có thể được biểu diễn bằng:", opts: { a: "nguồn điện áp", b: "điện trở", c: "công tắc", d: "tất cả các loại trên" }, ans: "c", expl: "Diode lý tưởng: đóng (ngắn mạch) khi phân cực thuận, hở khi phân cực ngược – hoạt động giống như một công tắc." },
+            { q: "Trong mô hình diode thực tế:", opts: { a: "có tính đến thế hàng rào", b: "có tính đến điện trở động thuận", c: "không có yếu tố nào ở trên", d: "có tính cả (a) và (b)" }, ans: "a", expl: "Mô hình thực tế = diode lý tưởng nối tiếp nguồn <span class='math'>0,7 V</span> (thế hàng rào). Điện trở động chỉ có ở mô hình đầy đủ." },
+            { q: "Trong mô hình diode đầy đủ:", opts: { a: "có tính đến thế hàng rào", b: "có tính đến điện trở động thuận", c: "có tính đến điện trở ngược", d: "tất cả các yếu tố trên" }, ans: "d", expl: "Mô hình đầy đủ gồm: thế hàng rào, điện trở động thuận r'<sub>d</sub> và điện trở ngược r'<sub>R</sub>." },
+            { q: "Giá trị trung bình của điện áp chỉnh lưu nửa chu kỳ có đỉnh 200 V là:", opts: { a: "63,7 V", b: "127,2 V", c: "141 V", d: "0 V" }, ans: "a", expl: "Công thức nửa chu kỳ: <span class='math'>V<sub>AVG</sub> = V<sub>p</sub> / &pi;</span> = 200 / 3,14 = 63,7 V." },
+            { q: "Khi đưa điện áp hình sin 60 Hz vào chỉnh lưu nửa chu kỳ, tần số ngõ ra là:", opts: { a: "120 Hz", b: "30 Hz", c: "60 Hz", d: "0 Hz" }, ans: "c", expl: "Mỗi chu kỳ vào chỉ cho một xung ra nên <span class='math'>f<sub>out</sub> = f<sub>in</sub> = 60 Hz</span>." },
+            { q: "Đỉnh điện áp vào chỉnh lưu nửa chu kỳ là 10 V. Đỉnh gần đúng của điện áp ra là:", opts: { a: "10 V", b: "3,18 V", c: "10,7 V", d: "9,3 V" }, ans: "d", expl: "Tính sụt áp qua 1 diode: <span class='math'>V<sub>p(out)</sub> = V<sub>p(in)</sub> - 0,7 V</span> = 10 - 0,7 = 9,3 V." },
+            { q: "Với mạch chỉnh lưu nửa chu kỳ có điện áp đỉnh ngõ vào 10 V, diode phải chịu được điện áp ngược đỉnh (PIV) là:", opts: { a: "10 V", b: "5 V", c: "20 V", d: "3,18 V" }, ans: "a", expl: "Ở nửa chu kỳ âm, toàn bộ điện áp vào đặt lên diode: <span class='math'>PIV = V<sub>p(in)</sub> = 10 V</span>." },
+            { q: "Giá trị trung bình của điện áp chỉnh lưu toàn chu kỳ có đỉnh 75 V là:", opts: { a: "53 V", b: "47,8 V", c: "37,5 V", d: "23,9 V" }, ans: "b", expl: "Công thức toàn chu kỳ: <span class='math'>V<sub>AVG</sub> = 2V<sub>p</sub> / &pi;</span> = (2 * 75) / 3,14 = 47,8 V." },
+            { q: "Khi đưa điện áp hình sin 60 Hz vào chỉnh lưu toàn chu kỳ, tần số ngõ ra là:", opts: { a: "120 Hz", b: "60 Hz", c: "240 Hz", d: "0 Hz" }, ans: "a", expl: "Mỗi chu kỳ vào cho hai xung ra: <span class='math'>f<sub>out</sub> = 2 * f<sub>in</sub></span> = 2 * 60 = 120 Hz." },
+            { q: "Tổng điện áp thứ cấp của mạch chỉnh lưu toàn chu kỳ dùng biến áp điểm giữa là 125 V rms. Bỏ qua sụt áp diode, điện áp ra rms là:", opts: { a: "125 V", b: "177 V", c: "100 V", d: "62,5 V" }, ans: "d", expl: "Mỗi nửa cuộn thứ cấp chỉ cung cấp một nửa điện áp: <span class='math'>125 / 2 = 62,5 V rms</span> nên ngõ ra có 62,5 V rms." },
+            { q: "Khi điện áp ra đỉnh là 100 V, PIV của mỗi diode trong mạch chỉnh lưu toàn chu kỳ có điểm giữa là (bỏ qua sụt áp diode):", opts: { a: "100 V", b: "200 V", c: "141 V", d: "50 V" }, ans: "b", expl: "Công thức PIV mạch điểm giữa: <span class='math'>PIV = 2V<sub>p(out)</sub> + 0,7</span> &approx; 2 * 100 = 200 V (bỏ qua 0,7)." },
+            { q: "Khi điện áp ra rms của chỉnh lưu cầu là 20 V, điện áp ngược đỉnh trên các diode là (bỏ qua sụt áp diode):", opts: { a: "20 V", b: "40 V", c: "28,3 V", d: "56,6 V" }, ans: "c", expl: "Đổi rms ra đỉnh: <span class='math'>V<sub>p(out)</sub> = 20 * &radic;2 = 28,3 V</span>. Với mạch cầu PIV = V<sub>p(out)</sub> &approx; 28,3 V." },
+            { q: "Một điện áp hình sin 10 V đỉnh–đỉnh được đặt lên mạch gồm diode silicon nối tiếp điện trở. Điện áp lớn nhất trên diode là:", opts: { a: "9,3 V", b: "5 V", c: "0,7 V", d: "10 V", e: "4,3 V" }, ans: "b", expl: "Biên độ đỉnh là 10/2 = 5 V. Ở chiều thuận diode sụt 0,7 V, nhưng ở nửa chu kỳ ngược diode khóa nên chịu cả 5 V." },
+            { q: "Trong một mạch xén phân cực, điện áp phân cực là 5 V, ngõ vào là sóng sin đỉnh 10 V. Nếu cực dương của nguồn phân cực nối với catot của diode, điện áp lớn nhất ở anode là:", opts: { a: "10 V", b: "5 V", c: "5,7 V", d: "0,7 V" }, ans: "c", expl: "Diode chỉ dẫn khi <span class='math'>V<sub>anode</sub> &ge; V<sub>BIAS</sub> + 0,7</span> = 5 + 0,7 = 5,7 V. Nên anode bị giữ ở mức tối đa 5,7 V." },
+            { q: "Trong một mạch ghim dương, ngõ vào là sóng sin 120 V rms. Giá trị một chiều của ngõ ra là:", opts: { a: "119,3 V", b: "169 V", c: "60 V", d: "75,6 V" }, ans: "b", expl: "Tìm đỉnh ngõ vào: <span class='math'>V<sub>p</sub> = 120 * &radic;2 = 169,7 V</span>. Mạch ghim: <span class='math'>V<sub>DC</sub> &approx; V<sub>p</sub> - 0,7</span> &approx; 169 V." },
+            { q: "Ngõ vào của mạch nhân đôi điện áp là 120 V rms. Điện áp ngõ ra xấp xỉ:", opts: { a: "240 V", b: "60 V", c: "167 V", d: "339 V" }, ans: "d", expl: "Đỉnh ngõ vào: <span class='math'>V<sub>p(in)</sub> = 120 * &radic;2 = 169,7 V</span>. Mạch nhân đôi: <span class='math'>V<sub>out</sub> = 2 * V<sub>p(in)</sub></span> &approx; 339 V." },
+            { q: "Nếu điện áp vào mạch nhân ba có giá trị rms là 12 V thì điện áp một chiều ra xấp xỉ:", opts: { a: "36 V", b: "50,9 V", c: "33,9 V", d: "32,4 V" }, ans: "b", expl: "Đỉnh ngõ vào: <span class='math'>V<sub>p(in)</sub> = 12 * &radic;2 = 16,97 V</span>. Mạch nhân ba: <span class='math'>V<sub>out</sub> = 3 * V<sub>p(in)</sub></span> &approx; 50,9 V." },
+            { q: "Khi diode silicon hoạt động tốt ở chế độ phân cực thuận, đồng hồ DMM ở thang thử diode sẽ chỉ:", opts: { a: "0 V", b: "OL", c: "xấp xỉ 0,7 V", d: "xấp xỉ 0,3 V" }, ans: "c", expl: "Đồng hồ hiển thị điện áp thuận (sụt áp) của tiếp giáp pn ở Si là khoảng 0,7 V." },
+            { q: "Khi diode silicon bị hở, DMM thường chỉ:", opts: { a: "0 V", b: "OL", c: "xấp xỉ 0,7 V", d: "xấp xỉ 0,3 V" }, ans: "b", expl: "Diode hở không dẫn dòng ở cả hai chiều nên đồng hồ báo quá thang (Overload - OL)." },
+            { q: "Trong mạch chỉnh lưu, nếu cuộn thứ cấp của biến áp bị hở thì ngõ ra:", opts: { a: "0 V", b: "120 V", c: "nhỏ hơn bình thường", d: "không bị ảnh hưởng" }, ans: "a", expl: "Không có điện áp xoay chiều đưa vào diode nên ngõ ra bằng 0 V." },
+            { q: "Nếu một trong các diode của mạch chỉnh lưu cầu toàn chu kỳ bị hở, ngõ ra là:", opts: { a: "0 V", b: "bằng một phần tư biên độ điện áp vào", c: "điện áp chỉnh lưu nửa chu kỳ", d: "điện áp 120 Hz" }, ans: "c", expl: "Hở một diode làm đứt đường dẫn của một nửa chu kỳ. Mạch chỉ còn một nửa chu kỳ có đường dẫn nên ngõ ra thành dạng chỉnh lưu nửa chu kỳ." },
+            { q: "Khi kiểm tra mạch chỉnh lưu cầu toàn chu kỳ 60 Hz mà thấy ngõ ra có gợn sóng 60 Hz thì:", opts: { a: "mạch đang hoạt động bình thường", b: "có một diode bị hở", c: "cuộn thứ cấp biến áp bị chập", d: "tụ lọc bị rò" }, ans: "b", expl: "Chỉnh lưu toàn chu kỳ bình thường cho tần số gợn là 2*60 = 120 Hz. Gợn 60 Hz cho thấy mạch chỉ còn hoạt động nửa chu kỳ do hở 1 diode." },
 
             // BJT
-            { q: "Ba cực của transistor lưỡng cực (BJT) được gọi là:", opts: { a: "p, n, p", b: "n, p, n", c: "ngõ vào, ngõ ra, đất", d: "cực nền, cực phát, cực thu" }, ans: "d" },
-            { q: "Trong transistor pnp, các vùng p là:", opts: { a: "cực nền và cực phát", b: "cực nền và cực thu", c: "cực phát và cực thu" }, ans: "c" },
-            { q: "Để làm khuếch đại, cực nền của transistor npn phải:", opts: { a: "dương so với cực phát", b: "âm so với cực phát", c: "dương so với cực thu", d: "bằng 0 V" }, ans: "a" },
-            { q: "Dòng cực phát luôn:", opts: { a: "lớn hơn dòng nền", b: "nhỏ hơn dòng thu", c: "lớn hơn dòng thu", d: "cả (a) và (c)" }, ans: "d" },
-            { q: "βDC của transistor là:", opts: { a: "độ lợi dòng", b: "độ lợi áp", c: "độ lợi công suất", d: "điện trở trong" }, ans: "a" },
-            { q: "Nếu IC lớn gấp 50 lần IB thì βDC là:", opts: { a: "0,02", b: "100", c: "50", d: "500" }, ans: "c" },
-            { q: "Điện áp gần đúng trên tiếp giáp nền–phát phân cực thuận của BJT silicon là:", opts: { a: "0 V", b: "0,7 V", c: "0,3 V", d: "VBB" }, ans: "b" },
-            { q: "Điều kiện phân cực để transistor làm việc như bộ khuếch đại tuyến tính gọi là:", opts: { a: "thuận–ngược", b: "thuận–thuận", c: "ngược–ngược", d: "phân cực cực thu" }, ans: "a" },
-            { q: "Nếu ngõ ra của mạch khuếch đại transistor là 5 V rms và ngõ vào là 100 mV rms thì độ lợi áp là:", opts: { a: "5", b: "500", c: "50", d: "100" }, ans: "c" },
-            { q: "Khi hoạt động ở vùng ngắt và bão hòa, transistor hoạt động như:", opts: { a: "bộ khuếch đại tuyến tính", b: "công tắc", c: "tụ điện biến đổi", d: "điện trở biến đổi" }, ans: "b" },
-            { q: "Ở trạng thái ngắt, VCE:", opts: { a: "bằng 0 V", b: "nhỏ nhất", c: "lớn nhất", d: "bằng VCC", e: "cả (a) và (b)", f: "cả (c) và (d)" }, ans: "f" },
-            { q: "Ở trạng thái bão hòa, VCE:", opts: { a: "0,7 V", b: "bằng VCC", c: "nhỏ nhất", d: "lớn nhất" }, ans: "c" },
-            { q: "Để làm BJT bão hòa:", opts: { a: "IB = IC(sat)", b: "IB > IC(sat) / βDC", c: "VCC phải ít nhất 10 V", d: "cực phát phải nối đất" }, ans: "b" },
-            { q: "Khi đã bão hòa, nếu tiếp tục tăng dòng nền thì:", opts: { a: "dòng thu tăng", b: "dòng thu không bị ảnh hưởng", c: "dòng thu giảm", d: "transistor tắt" }, ans: "b" },
+            { q: "Ba cực của transistor lưỡng cực (BJT) được gọi là:", opts: { a: "p, n, p", b: "n, p, n", c: "ngõ vào, ngõ ra, đất", d: "cực nền, cực phát, cực thu" }, ans: "d", expl: "Ba cực của BJT là: cực nền (Base - B), cực phát (Emitter - E) và cực thu (Collector - C)." },
+            { q: "Trong transistor pnp, các vùng p là:", opts: { a: "cực nền và cực phát", b: "cực nền và cực thu", c: "cực phát và cực thu" }, ans: "c", expl: "Transistor pnp có cấu trúc p (cực phát E) – n (cực nền B) – p (cực thu C)." },
+            { q: "Để làm khuếch đại, cực nền của transistor npn phải:", opts: { a: "dương so với cực phát", b: "âm so với cực phát", c: "dương so với cực thu", d: "bằng 0 V" }, ans: "a", expl: "Để khuếch đại, tiếp giáp BE phải phân cực thuận: nền (B) phải dương hơn phát (E) khoảng 0,7 V." },
+            { q: "Dòng cực phát luôn:", opts: { a: "lớn hơn dòng nền", b: "nhỏ hơn dòng thu", c: "lớn hơn dòng thu", d: "cả (a) và (c)" }, ans: "d", expl: "Công thức dòng: <span class='math'>I<sub>E</sub> = I<sub>C</sub> + I<sub>B</sub></span>. Do đó I<sub>E</sub> luôn lớn hơn cả I<sub>B</sub> lẫn I<sub>C</sub>." },
+            { q: "βDC của transistor là:", opts: { a: "độ lợi dòng", b: "độ lợi áp", c: "độ lợi công suất", d: "điện trở trong" }, ans: "a", expl: "Công thức: <span class='math'>&beta;<sub>DC</sub> = I<sub>C</sub> / I<sub>B</sub></span>, đây chính là hệ số khuếch đại dòng điện (độ lợi dòng) một chiều." },
+            { q: "Nếu IC lớn gấp 50 lần IB thì βDC là:", opts: { a: "0,02", b: "100", c: "50", d: "500" }, ans: "c", expl: "Từ công thức <span class='math'>&beta;<sub>DC</sub> = I<sub>C</sub> / I<sub>B</sub></span>, nếu I<sub>C</sub> = 50 * I<sub>B</sub> thì &beta;<sub>DC</sub> = 50." },
+            { q: "Điện áp gần đúng trên tiếp giáp nền–phát phân cực thuận của BJT silicon là:", opts: { a: "0 V", b: "0,7 V", c: "0,3 V", d: "VBB" }, ans: "b", expl: "Tiếp giáp pn của vật liệu silicon khi phân cực thuận có điện áp <span class='math'>V<sub>BE</sub> &approx; 0,7 V</span>." },
+            { q: "Điều kiện phân cực để transistor làm việc như bộ khuếch đại tuyến tính gọi là:", opts: { a: "thuận–ngược", b: "thuận–thuận", c: "ngược–ngược", d: "phân cực cực thu" }, ans: "a", expl: "Chế độ khuếch đại yêu cầu: Tiếp giáp BE phân cực thuận, tiếp giáp BC phân cực ngược." },
+            { q: "Nếu ngõ ra của mạch khuếch đại transistor là 5 V rms và ngõ vào là 100 mV rms thì độ lợi áp là:", opts: { a: "5", b: "500", c: "50", d: "100" }, ans: "c", expl: "Công thức độ lợi áp: <span class='math'>A<sub>v</sub> = V<sub>out</sub> / V<sub>in</sub></span> = 5 V / 0,1 V = 50." },
+            { q: "Khi hoạt động ở vùng ngắt và bão hòa, transistor hoạt động như:", opts: { a: "bộ khuếch đại tuyến tính", b: "công tắc", c: "tụ điện biến đổi", d: "điện trở biến đổi" }, ans: "b", expl: "Vùng ngắt = công tắc hở (tắt), vùng bão hòa = công tắc đóng (bật)." },
+            { q: "Ở trạng thái ngắt, VCE:", opts: { a: "bằng 0 V", b: "nhỏ nhất", c: "lớn nhất", d: "bằng VCC", e: "cả (a) và (b)", f: "cả (c) và (d)" }, ans: "f", expl: "Khi transistor ngắt, <span class='math'>I<sub>C</sub> &approx; 0</span> nên không có sụt áp trên R<sub>C</sub>. Do đó <span class='math'>V<sub>CE</sub> = V<sub>CC</sub></span>, đó là giá trị lớn nhất." },
+            { q: "Ở trạng thái bão hòa, VCE:", opts: { a: "0,7 V", b: "bằng VCC", c: "nhỏ nhất", d: "lớn nhất" }, ans: "c", expl: "Khi bão hòa (dẫn hoàn toàn), V<sub>CE</sub> giảm xuống giá trị nhỏ nhất gọi là V<sub>CE(sat)</sub> (xấp xỉ 0 – 0,2 V)." },
+            { q: "Để làm BJT bão hòa:", opts: { a: "IB = IC(sat)", b: "IB > IC(sat) / βDC", c: "VCC phải ít nhất 10 V", d: "cực phát phải nối đất" }, ans: "b", expl: "Dòng nền phải lớn hơn mức tối thiểu <span class='math'>I<sub>B(min)</sub> = I<sub>C(sat)</sub> / &beta;<sub>DC</sub></span> để bảo đảm transistor chuyển hẳn sang trạng thái bão hòa." },
+            { q: "Khi đã bão hòa, nếu tiếp tục tăng dòng nền thì:", opts: { a: "dòng thu tăng", b: "dòng thu không bị ảnh hưởng", c: "dòng thu giảm", d: "transistor tắt" }, ans: "b", expl: "Ở bão hòa, I<sub>C</sub> đã đạt mức cực đại (bị giới hạn bởi V<sub>CC</sub> và R<sub>C</sub>), nên dù I<sub>B</sub> có tăng thì I<sub>C</sub> cũng không tăng nữa." },
 
             // FET
-            { q: "JFET là:", opts: { a: "linh kiện đơn cực", b: "linh kiện điều khiển bằng điện áp", c: "linh kiện điều khiển bằng dòng điện", d: "cả (a) và (c)", e: "cả (a) và (b)" }, ans: "e" },
-            { q: "Kênh dẫn của JFET nằm giữa:", opts: { a: "cổng và máng", b: "máng và nguồn", c: "cổng và nguồn", d: "ngõ vào và ngõ ra" }, ans: "b" },
-            { q: "JFET luôn hoạt động với:", opts: { a: "tiếp giáp pn cổng–nguồn phân cực ngược", b: "tiếp giáp pn cổng–nguồn phân cực thuận", c: "máng nối đất", d: "cổng nối với nguồn" }, ans: "a" },
-            { q: "Với VGS = 0 V, dòng máng trở nên không đổi khi VDS vượt quá:", opts: { a: "điểm ngắt", b: "VDD", c: "VP", d: "0 V" }, ans: "c" },
-            { q: "Vùng dòng không đổi của FET nằm giữa:", opts: { a: "ngắt và bão hòa", b: "ngắt và thắt kênh", c: "0 và IDSS", d: "thắt kênh và đánh thủng" }, ans: "d" },
-            { q: "IDSS là:", opts: { a: "dòng máng khi nguồn được nối tắt (với cổng)", b: "dòng máng ở trạng thái ngắt", c: "dòng máng lớn nhất có thể", d: "dòng máng ở điểm giữa" }, ans: "a" },
-            { q: "Dòng máng trong vùng dòng không đổi tăng khi:", opts: { a: "điện áp phân cực cổng–nguồn giảm", b: "điện áp phân cực cổng–nguồn tăng", c: "điện áp máng–nguồn tăng", d: "điện áp máng–nguồn giảm" }, ans: "a" },
-            { q: "Trong một mạch FET có VGS = 0 V, VDD = 15 V, IDSS = 15 mA và RD = 470 Ω. Nếu giảm RD xuống 330 Ω thì IDSS là:", opts: { a: "19,5 mA", b: "10,5 mA", c: "15 mA", d: "1 mA" }, ans: "c" },
-            { q: "Ở trạng thái ngắt, kênh JFET:", opts: { a: "rộng nhất", b: "bị vùng nghèo đóng hoàn toàn", c: "rất hẹp", d: "bị phân cực ngược" }, ans: "b" },
-            { q: "Datasheet của một JFET cho VGS(off) = -4 V. Điện áp thắt kênh VP:", opts: { a: "không xác định được", b: "bằng -4 V", c: "phụ thuộc VGS", d: "bằng +4 V" }, ans: "d" },
-            { q: "JFET có VGS(off) = -4 V là loại:", opts: { a: "kênh n", b: "kênh p", c: "có thể là loại nào cũng được" }, ans: "a" },
-            { q: "Một JFET có IGSS = 10 nA tại VGS = 10 V. Điện trở vào là:", opts: { a: "100 MΩ", b: "1 MΩ", c: "1000 MΩ" }, ans: "c" },
-            { q: "Một JFET kênh p có VGS(off) = +8 V. Giá trị VGS để phân cực gần điểm giữa là:", opts: { a: "4 V", b: "0 V", c: "1,25 V", d: "2,34 V" }, ans: "d" },
-            { q: "Trong JFET tự phân cực, cổng ở:", opts: { a: "điện áp dương", b: "0 V", c: "điện áp âm", d: "đất" }, ans: "b" },
-            { q: "MOSFET khác JFET chủ yếu vì:", opts: { a: "công suất định mức", b: "MOSFET có hai cổng", c: "JFET có tiếp giáp pn", d: "MOSFET không có kênh vật lý" }, ans: "c" },
-            { q: "D-MOSFET hoạt động ở:", opts: { a: "chỉ chế độ nghèo", b: "chỉ chế độ giàu", c: "chỉ vùng ohmic", d: "cả chế độ nghèo và chế độ giàu" }, ans: "d" },
-            { q: "D-MOSFET kênh n với VGS dương đang hoạt động ở:", opts: { a: "chế độ nghèo", b: "chế độ giàu", c: "vùng ngắt", d: "vùng bão hòa" }, ans: "b" },
-            { q: "Một E-MOSFET kênh p có VGS(th) = -2 V. Nếu VGS = 0 V thì dòng máng là:", opts: { a: "0 A", b: "ID(on)", c: "cực đại", d: "IDSS" }, ans: "a" },
-            { q: "Trong E-MOSFET, không có dòng máng cho đến khi VGS:", opts: { a: "đạt VGS(th)", b: "dương", c: "âm", d: "bằng 0 V" }, ans: "a" },
-            { q: "Mọi linh kiện MOS đều có thể bị hỏng do:", opts: { a: "nhiệt độ quá cao", b: "phóng tĩnh điện (ESD)", c: "điện áp quá lớn", d: "tất cả các nguyên nhân trên" }, ans: "b" },
-            { q: "Một D-MOSFET được phân cực ở VGS = 0 V. Datasheet cho IDSS = 20 mA và VGS(off) = -5 V. Dòng máng:", opts: { a: "bằng 0 A", b: "không xác định được", c: "bằng 20 mA" }, ans: "c" },
+            { q: "JFET là:", opts: { a: "linh kiện đơn cực", b: "linh kiện điều khiển bằng điện áp", c: "linh kiện điều khiển bằng dòng điện", d: "cả (a) và (c)", e: "cả (a) và (b)" }, ans: "e", expl: "JFET dùng một loại hạt dẫn (đơn cực) và dòng máng (I<sub>D</sub>) được điều khiển bằng điện áp V<sub>GS</sub>." },
+            { q: "Kênh dẫn của JFET nằm giữa:", opts: { a: "cổng và máng", b: "máng và nguồn", c: "cổng và nguồn", d: "ngõ vào và ngõ ra" }, ans: "b", expl: "Dòng điện chạy trong kênh dẫn từ cực nguồn (Source - S) đến cực máng (Drain - D); cực cổng điều khiển độ rộng kênh này." },
+            { q: "JFET luôn hoạt động với:", opts: { a: "tiếp giáp pn cổng–nguồn phân cực ngược", b: "tiếp giáp pn cổng–nguồn phân cực thuận", c: "máng nối đất", d: "cổng nối với nguồn" }, ans: "a", expl: "Tiếp giáp cổng–nguồn luôn phân cực ngược nên dòng cổng (I<sub>G</sub>) rất nhỏ và trở kháng vào rất lớn." },
+            { q: "Với VGS = 0 V, dòng máng trở nên không đổi khi VDS vượt quá:", opts: { a: "điểm ngắt", b: "VDD", c: "VP", d: "0 V" }, ans: "c", expl: "Khi V<sub>DS</sub> vượt qua điện áp thắt kênh V<sub>P</sub> thì I<sub>D</sub> đạt giá trị không đổi cực đại là I<sub>DSS</sub>." },
+            { q: "Vùng dòng không đổi của FET nằm giữa:", opts: { a: "ngắt và bão hòa", b: "ngắt và thắt kênh", c: "0 và IDSS", d: "thắt kênh và đánh thủng" }, ans: "d", expl: "Vùng dòng không đổi (vùng bão hòa của FET) bắt đầu từ điểm thắt kênh (V<sub>P</sub>) kéo dài đến điện áp đánh thủng." },
+            { q: "IDSS là:", opts: { a: "dòng máng khi nguồn được nối tắt (với cổng)", b: "dòng máng ở trạng thái ngắt", c: "dòng máng lớn nhất có thể", d: "dòng máng ở điểm giữa" }, ans: "a", expl: "I<sub>DSS</sub> là dòng máng lớn nhất đạt được khi <span class='math'>V<sub>GS</sub> = 0</span> (cực cổng nối tắt với cực nguồn) ở vùng dòng không đổi." },
+            { q: "Dòng máng trong vùng dòng không đổi tăng khi:", opts: { a: "điện áp phân cực cổng–nguồn giảm", b: "điện áp phân cực cổng–nguồn tăng", c: "điện áp máng–nguồn tăng", d: "điện áp máng–nguồn giảm" }, ans: "a", expl: "Trong vùng này I<sub>D</sub> do V<sub>GS</sub> quyết định: phân cực ngược càng nhỏ (giảm độ lớn V<sub>GS</sub> âm) thì kênh càng rộng, I<sub>D</sub> càng lớn." },
+            { q: "Trong một mạch FET có VGS = 0 V, VDD = 15 V, IDSS = 15 mA và RD = 470 Ω. Nếu giảm RD xuống 330 Ω thì IDSS là:", opts: { a: "19,5 mA", b: "10,5 mA", c: "15 mA", d: "1 mA" }, ans: "c", expl: "I<sub>DSS</sub> là thông số đặc trưng của chính linh kiện (do nhà sản xuất quy định), nên không thay đổi khi thay đổi điện trở ngoài R<sub>D</sub>." },
+            { q: "Ở trạng thái ngắt, kênh JFET:", opts: { a: "rộng nhất", b: "bị vùng nghèo đóng hoàn toàn", c: "rất hẹp", d: "bị phân cực ngược" }, ans: "b", expl: "Khi <span class='math'>|V<sub>GS</sub>| = |V<sub>GS(off)</sub>|</span>, vùng nghèo mở rộng và phủ kín kênh dẫn, cắt đứt dòng điện nên <span class='math'>I<sub>D</sub> = 0</span>." },
+            { q: "Datasheet của một JFET cho VGS(off) = -4 V. Điện áp thắt kênh VP:", opts: { a: "không xác định được", b: "bằng -4 V", c: "phụ thuộc VGS", d: "bằng +4 V" }, ans: "d", expl: "Về độ lớn: <span class='math'>V<sub>P</sub> = -V<sub>GS(off)</sub></span> = -(-4 V) = +4 V." },
+            { q: "JFET có VGS(off) = -4 V là loại:", opts: { a: "kênh n", b: "kênh p", c: "có thể là loại nào cũng được" }, ans: "a", expl: "V<sub>GS(off)</sub> mang dấu âm nghĩa là cổng cần điện áp âm để ngắt kênh, đây là đặc trưng của JFET kênh n." },
+            { q: "Một JFET có IGSS = 10 nA tại VGS = 10 V. Điện trở vào là:", opts: { a: "100 MΩ", b: "1 MΩ", c: "1000 MΩ" }, ans: "c", expl: "Công thức trở kháng vào: <span class='math'>R<sub>IN</sub> = |V<sub>GS</sub> / I<sub>GSS</sub>|</span> = 10 V / 10 nA = 10<sup>9</sup> &Omega; = 1000 M&Omega;." },
+            { q: "Một JFET kênh p có VGS(off) = +8 V. Giá trị VGS để phân cực gần điểm giữa là:", opts: { a: "4 V", b: "0 V", c: "1,25 V", d: "2,34 V" }, ans: "d", expl: "Phân cực điểm giữa: <span class='math'>V<sub>GS</sub> &approx; V<sub>GS(off)</sub> / 3,4</span> = 8 / 3,4 &approx; 2,34 V." },
+            { q: "Trong JFET tự phân cực, cổng ở:", opts: { a: "điện áp dương", b: "0 V", c: "điện áp âm", d: "đất" }, ans: "b", expl: "Cực cổng nối đất qua điện trở R<sub>G</sub> (do dòng I<sub>G</sub> gần như bằng 0) nên <span class='math'>V<sub>G</sub> = 0 V</span>. V<sub>GS</sub> âm có được là do cực nguồn V<sub>S</sub> được nâng lên bởi I<sub>D</sub>*R<sub>S</sub>." },
+            { q: "MOSFET khác JFET chủ yếu vì:", opts: { a: "công suất định mức", b: "MOSFET có hai cổng", c: "JFET có tiếp giáp pn", d: "MOSFET không có kênh vật lý" }, ans: "c", expl: "Cổng của MOSFET được cách điện bằng lớp oxit (Silicon dioxide), còn JFET sử dụng một tiếp giáp pn phân cực ngược giữa cổng và kênh." },
+            { q: "D-MOSFET hoạt động ở:", opts: { a: "chỉ chế độ nghèo", b: "chỉ chế độ giàu", c: "chỉ vùng ohmic", d: "cả chế độ nghèo và chế độ giàu" }, ans: "d", expl: "D-MOSFET có kênh dẫn vật lý sẵn nên hoạt động được với V<sub>GS</sub> âm (chế độ nghèo) lẫn V<sub>GS</sub> dương (chế độ giàu)." },
+            { q: "D-MOSFET kênh n với VGS dương đang hoạt động ở:", opts: { a: "chế độ nghèo", b: "chế độ giàu", c: "vùng ngắt", d: "vùng bão hòa" }, ans: "b", expl: "V<sub>GS</sub> dương sẽ hút thêm hạt dẫn (electron) vào kênh, làm tăng số electron trong kênh, đây gọi là chế độ giàu (enhancement mode)." },
+            { q: "Một E-MOSFET kênh p có VGS(th) = -2 V. Nếu VGS = 0 V thì dòng máng là:", opts: { a: "0 A", b: "ID(on)", c: "cực đại", d: "IDSS" }, ans: "a", expl: "Vì V<sub>GS</sub> = 0 V chưa đạt điện áp ngưỡng V<sub>GS(th)</sub> = -2 V, kênh chưa được cảm ứng nên <span class='math'>I<sub>D</sub> = 0 A</span>." },
+            { q: "Trong E-MOSFET, không có dòng máng cho đến khi VGS:", opts: { a: "đạt VGS(th)", b: "dương", c: "âm", d: "bằng 0 V" }, ans: "a", expl: "E-MOSFET không có kênh dẫn vật lý. Kênh chỉ được tạo ra (cảm ứng) khi |V<sub>GS</sub>| vượt qua mức điện áp ngưỡng V<sub>GS(th)</sub>." },
+            { q: "Mọi linh kiện MOS đều có thể bị hỏng do:", opts: { a: "nhiệt độ quá cao", b: "phóng tĩnh điện (ESD)", c: "điện áp quá lớn", d: "tất cả các nguyên nhân trên" }, ans: "b", expl: "Lớp oxit cách điện của cổng MOS rất mỏng nên đặc biệt dễ bị phá hủy xuyên thủng bởi sự phóng tĩnh điện (ESD) khi chạm tay." },
+            { q: "Một D-MOSFET được phân cực ở VGS = 0 V. Datasheet cho IDSS = 20 mA và VGS(off) = -5 V. Dòng máng:", opts: { a: "bằng 0 A", b: "không xác định được", c: "bằng 20 mA" }, ans: "c", expl: "Tại <span class='math'>V<sub>GS</sub> = 0 V</span>, dòng máng đạt giá trị đúng bằng I<sub>DSS</sub>. Vậy <span class='math'>I<sub>D</sub> = 20 mA</span>." },
 
             // Op-amp
-            { q: "Một op-amp mạch tích hợp (IC) có:", opts: { a: "hai ngõ vào và hai ngõ ra", b: "một ngõ vào và một ngõ ra", c: "hai ngõ vào và một ngõ ra" }, ans: "c" },
-            { q: "Đặc tính nào sau đây không nhất thiết áp dụng cho op-amp?", opts: { a: "độ lợi cao", b: "công suất tiêu thụ thấp", c: "trở kháng vào cao", d: "trở kháng ra thấp" }, ans: "b" },
-            { q: "Mạch khuếch đại vi sai:", opts: { a: "là một phần của op-amp", b: "có một ngõ vào và một ngõ ra", c: "có hai ngõ ra", d: "cả (a) và (c)" }, ans: "d" },
-            { q: "Khi op-amp hoạt động ở chế độ vi sai một đầu:", opts: { a: "ngõ ra được nối đất", b: "một ngõ vào nối đất và tín hiệu đưa vào ngõ còn lại", c: "hai ngõ vào nối với nhau", d: "ngõ ra không bị đảo" }, ans: "b" },
-            { q: "Ở chế độ vi sai hai đầu:", opts: { a: "tín hiệu đặt giữa hai ngõ vào", b: "độ lợi bằng 1", c: "các ngõ ra có biên độ khác nhau", d: "chỉ dùng một nguồn cấp" }, ans: "a" },
-            { q: "Ở chế độ chung:", opts: { a: "cả hai ngõ vào nối đất", b: "các ngõ ra nối với nhau", c: "một tín hiệu giống hệt nhau xuất hiện trên cả hai ngõ vào", d: "các tín hiệu ra cùng pha" }, ans: "c" },
-            { q: "Độ lợi chế độ chung của Op-amp:", opts: { a: "rất cao", b: "rất thấp", c: "luôn bằng 1", d: "không dự đoán được" }, ans: "b" }
+            { q: "Một op-amp mạch tích hợp (IC) có:", opts: { a: "hai ngõ vào và hai ngõ ra", b: "một ngõ vào và một ngõ ra", c: "hai ngõ vào và một ngõ ra" }, ans: "c", expl: "Op-amp cơ bản có ngõ vào đảo (-), ngõ vào không đảo (+) và một ngõ ra duy nhất." },
+            { q: "Đặc tính nào sau đây không nhất thiết áp dụng cho op-amp?", opts: { a: "độ lợi cao", b: "công suất tiêu thụ thấp", c: "trở kháng vào cao", d: "trở kháng ra thấp" }, ans: "b", expl: "Các đặc tính cơ bản của op-amp là độ lợi rất cao, trở kháng vào (Z<sub>in</sub>) cao, trở kháng ra (Z<sub>out</sub>) thấp. Việc tiêu thụ công suất thấp không phải là điều kiện bắt buộc." },
+            { q: "Mạch khuếch đại vi sai:", opts: { a: "là một phần của op-amp", b: "có một ngõ vào và một ngõ ra", c: "có hai ngõ ra", d: "cả (a) và (c)" }, ans: "d", expl: "Tầng đầu vào của một IC op-amp luôn là mạch khuếch đại vi sai, bản thân nó có hai ngõ vào và hai ngõ ra (trước khi đưa tới các tầng tiếp theo)." },
+            { q: "Khi op-amp hoạt động ở chế độ vi sai một đầu:", opts: { a: "ngõ ra được nối đất", b: "một ngõ vào nối đất và tín hiệu đưa vào ngõ còn lại", c: "hai ngõ vào nối với nhau", d: "ngõ ra không bị đảo" }, ans: "b", expl: "Đây là định nghĩa cơ bản của chế độ vi sai một đầu (single-ended differential input)." },
+            { q: "Ở chế độ vi sai hai đầu:", opts: { a: "tín hiệu đặt giữa hai ngõ vào", b: "độ lợi bằng 1", c: "các ngõ ra có biên độ khác nhau", d: "chỉ dùng một nguồn cấp" }, ans: "a", expl: "Tín hiệu được đưa vào hai ngõ vào ngược cực tính, tương đương với một tín hiệu vi sai hoàn chỉnh đặt giữa hai ngõ vào." },
+            { q: "Ở chế độ chung:", opts: { a: "cả hai ngõ vào nối đất", b: "các ngõ ra nối với nhau", c: "một tín hiệu giống hệt nhau xuất hiện trên cả hai ngõ vào", d: "các tín hiệu ra cùng pha" }, ans: "c", expl: "Chế độ chung (Common Mode) xảy ra khi cả hai ngõ vào nhận cùng một tín hiệu giống hệt nhau (thường là nhiễu)." },
+            { q: "Độ lợi chế độ chung của Op-amp:", opts: { a: "rất cao", b: "rất thấp", c: "luôn bằng 1", d: "không dự đoán được" }, ans: "b", expl: "Op-amp lý tưởng có độ lợi chế độ chung (A<sub>cm</sub>) cực kỳ nhỏ (tiến về 0) để triệt tiêu hoàn toàn các tín hiệu nhiễu chung trên hai đường dây." }
         ];
 
         let selectedQuestions = [];
@@ -146,6 +146,7 @@
 
         function initQuiz() {
             currentScore = 0;
+            // Trộn ngân hàng câu hỏi
             const shuffledBank = shuffleArray([...questionBank]);
             selectedQuestions = shuffledBank.slice(0, TOTAL_QUESTIONS);
             
@@ -157,6 +158,7 @@
                 questionDiv.className = 'p-5 border rounded-lg shadow-sm bg-white hover:shadow-md transition-shadow';
                 questionDiv.id = `q-block-${index}`;
 
+                // HTML Câu hỏi và Lựa chọn
                 let html = `<h3 class="font-semibold text-lg text-gray-800 mb-3"><span class="text-blue-600 mr-1">Câu ${index + 1}:</span> ${q.q}</h3><div class="space-y-2">`;
                 
                 for (const [key, value] of Object.entries(q.opts)) {
@@ -167,13 +169,20 @@
                         </label>
                     `;
                 }
-                html += `</div>`;
+                
+                // Khung Giải thích (mặc định ẩn)
+                html += `
+                    </div>
+                    <div id="expl-container-${index}" class="hidden mt-4 p-4 bg-blue-50 text-blue-800 rounded-md border border-blue-200 text-sm leading-relaxed">
+                    </div>
+                `;
+                
                 questionDiv.innerHTML = html;
                 container.appendChild(questionDiv);
             });
         }
 
-        // Hàm này được gọi ngay khi người dùng click vào một đáp án
+        // Hàm xử lý ngay khi người dùng chọn đáp án
         function checkAnswer(qIndex, selectedKey, correctKey) {
             // Khóa tất cả các nút radio của câu hỏi này (không cho đổi đáp án)
             const inputs = document.querySelectorAll(`input[name="q${qIndex}"]`);
@@ -183,35 +192,42 @@
             const correctLabel = document.getElementById(`label-${qIndex}-${correctKey}`);
 
             if (selectedKey === correctKey) {
-                // Trả lời đúng -> Bôi xanh đáp án chọn, cộng điểm
+                // Đúng -> Đổi màu xanh
                 selectedLabel.classList.add('correct-answer');
                 currentScore++;
             } else {
-                // Trả lời sai -> Bôi đỏ đáp án chọn, bôi xanh đáp án đúng
+                // Sai -> Đổi màu đỏ, bôi xanh đáp án đúng
                 selectedLabel.classList.add('wrong-answer');
                 correctLabel.classList.add('correct-answer');
             }
+
+            // Hiển thị phần Giải thích
+            const explContainer = document.getElementById(`expl-container-${qIndex}`);
+            explContainer.innerHTML = `<strong>📖 Giải thích / Công thức:</strong><br/>${selectedQuestions[qIndex].expl}`;
+            explContainer.classList.remove('hidden');
         }
 
         function submitQuiz() {
-            const container = document.getElementById('quiz-container');
-
-            // Quét xem câu nào chưa được trả lời (input chưa bị disabled)
+            // Quét các câu chưa làm
             selectedQuestions.forEach((q, index) => {
                 const inputs = document.querySelectorAll(`input[name="q${index}"]`);
                 const isAnswered = Array.from(inputs).some(input => input.disabled);
                 
                 if (!isAnswered) {
-                    // Nếu chưa trả lời -> Khóa lại, bôi vàng nền câu hỏi, chỉ ra đáp án đúng
                     inputs.forEach(input => input.disabled = true);
                     const correctLabel = document.getElementById(`label-${index}-${q.ans}`);
                     const block = document.getElementById(`q-block-${index}`);
                     block.classList.add('border-yellow-400');
                     correctLabel.classList.add('missed-answer');
+                    
+                    // Hiển thị giải thích cho những câu bỏ lỡ
+                    const explContainer = document.getElementById(`expl-container-${index}`);
+                    explContainer.innerHTML = `<strong>📖 Giải thích / Công thức (Bỏ qua):</strong><br/>${q.expl}`;
+                    explContainer.classList.remove('hidden');
                 }
             });
 
-            // Hiện Modal điểm
+            // Hiện Modal kết quả tổng
             const resultModal = document.getElementById('result-modal');
             const scoreDisplay = document.getElementById('score-display');
             const scoreText = document.getElementById('score-text');
@@ -222,7 +238,7 @@
             const ratio = currentScore / TOTAL_QUESTIONS;
             if(ratio >= 0.8) feedback = 'Tuyệt vời! Bạn nắm kiến thức rất vững.';
             else if(ratio >= 0.5) feedback = 'Khá tốt! Hãy ôn lại thêm một chút nữa nhé.';
-            else feedback = 'Cố gắng lên! Bạn cần ôn tập kỹ lại lý thuyết.';
+            else feedback = 'Cố gắng lên! Đọc kỹ phần giải thích nhé.';
             
             scoreText.textContent = feedback;
             resultModal.classList.remove('hidden');
@@ -243,7 +259,7 @@
             initQuiz();
         });
 
-        // Chạy quiz khi vừa load xong trang
+        // Khởi tạo quiz khi load trang
         initQuiz();
     </script>
 </body>
